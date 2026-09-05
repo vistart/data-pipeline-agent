@@ -1,0 +1,16 @@
+{
+  "name": "parse_csv_basic",
+  "category": "normal",
+  "input": "解析 data/orders_v1.csv 文件",
+  "expected_tool": "parse_data",
+  "expected_args_contain": {
+    "source": "data/orders_v1.csv"
+  },
+  "validation": {
+    "response_must_contain": [
+      "10 行",
+      "7 列"
+    ],
+    "tool_result_status": "ok"
+  }
+}

@@ -1,0 +1,11 @@
+order_id,customer,product_code,quantity,unit_price,order_date,order_status,total_amount
+2001,Alice,W-A,5,29.99,2026-09-06,completed,149.95
+2002,Bob,W-B,3,49.99,2026-09-06,shipped,149.97
+2003,Charlie,W-A,10,29.99,2026-09-07,pending,299.90
+2004,Diana,W-C,2,99.99,2026-09-07,completed,199.98
+2005,Eve,W-B,7,49.99,2026-09-08,refunded,349.93
+2006,Frank,W-A,4,29.99,2026-09-08,completed,119.96
+2007,Grace,W-D,1,149.99,2026-09-09,completed,149.99
+2008,Henry,W-A,6,29.99,2026-09-09,pending,179.94
+2009,Ivy,W-C,3,99.99,2026-09-10,shipped,299.97
+2010,Jack,W-B,8,49.99,2026-09-10,completed,399.92

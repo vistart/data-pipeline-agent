@@ -1,0 +1,2 @@
+{"role": "user", "ts": "2026-09-05T13:34:48.956584+00:00", "content": "检查 sales 表的 schema"}
+{"role": "assistant", "ts": "2026-09-05T13:34:48.970116+00:00", "content": "[LLM not configured] Set DPA_BASE_URL and DPA_API_KEY in .env"}

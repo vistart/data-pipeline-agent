@@ -1,0 +1,16 @@
+{
+  "name": "schema_drift_detection",
+  "category": "normal",
+  "input": "对比 data/orders_v1.csv 和 data/orders_v2_drifted.csv 的 schema",
+  "expected_tool": "schema_infer",
+  "expected_args_contain": {
+    "known_schema": {}
+  },
+  "validation": {
+    "response_must_contain": [
+      "drift",
+      "变更"
+    ],
+    "tool_result_status": "ok"
+  }
+}

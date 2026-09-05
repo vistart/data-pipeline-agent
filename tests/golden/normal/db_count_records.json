@@ -1,0 +1,12 @@
+{
+  "name": "db_count_records",
+  "category": "normal",
+  "input": "统计 orders 表有多少条记录",
+  "expected_tool": "query_db",
+  "expected_args_contain": {
+    "mode": "count"
+  },
+  "validation": {
+    "tool_result_status": "ok"
+  }
+}

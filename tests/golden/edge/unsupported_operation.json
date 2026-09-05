@@ -1,0 +1,14 @@
+{
+  "name": "unsupported_operation",
+  "category": "edge",
+  "input": "用 Python 训练一个机器学习模型",
+  "expected_behavior": "should_explain_capability_limitation",
+  "validation": {
+    "response_must_contain": [
+      "无法",
+      "不支持",
+      "超出范围",
+      "做不到"
+    ]
+  }
+}

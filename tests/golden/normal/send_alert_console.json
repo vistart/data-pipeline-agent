@@ -1,0 +1,12 @@
+{
+  "name": "send_alert_console",
+  "category": "normal",
+  "input": "发送一条告警：数据质量检查发现 3 个 critical 问题",
+  "expected_tool": "send_alert",
+  "expected_args_contain": {
+    "level": "critical"
+  },
+  "validation": {
+    "tool_result_status": "ok"
+  }
+}

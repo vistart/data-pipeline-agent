@@ -1,0 +1,12 @@
+{
+  "name": "db_describe_table",
+  "category": "normal",
+  "input": "查看 orders 表的结构",
+  "expected_tool": "query_db",
+  "expected_args_contain": {
+    "mode": "describe"
+  },
+  "validation": {
+    "tool_result_status": "ok"
+  }
+}

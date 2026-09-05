@@ -1,0 +1,16 @@
+{
+  "name": "schema_infer_single",
+  "category": "normal",
+  "input": "推断 data/orders_v1.csv 的 schema",
+  "expected_tool": "schema_infer",
+  "expected_args_contain": {
+    "source": "data/orders_v1.csv"
+  },
+  "validation": {
+    "response_must_contain": [
+      "字段",
+      "类型"
+    ],
+    "tool_result_status": "ok"
+  }
+}

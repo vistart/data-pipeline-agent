@@ -1,0 +1,9 @@
+{
+  "name": "ambiguous_intent",
+  "category": "edge",
+  "input": "帮我处理一下数据",
+  "expected_behavior": "should_clarify_what_data_and_what_operation",
+  "validation": {
+    "must_ask_clarification": true
+  }
+}

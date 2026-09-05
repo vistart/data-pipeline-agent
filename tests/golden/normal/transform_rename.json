@@ -1,0 +1,12 @@
+{
+  "name": "transform_rename",
+  "category": "normal",
+  "input": "将 data/orders_v1.csv 中的 customer_name 列重命名为 customer",
+  "expected_tool": "transform_data",
+  "expected_args_contain": {
+    "op": "rename"
+  },
+  "validation": {
+    "tool_result_status": "ok"
+  }
+}

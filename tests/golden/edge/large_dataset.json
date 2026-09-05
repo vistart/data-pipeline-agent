@@ -1,0 +1,9 @@
+{
+  "name": "large_dataset",
+  "category": "edge",
+  "input": "解析一个有 100 万行的 CSV 文件",
+  "expected_behavior": "should_ask_for_file_path_or_handle_gracefully",
+  "validation": {
+    "must_not_crash": true
+  }
+}

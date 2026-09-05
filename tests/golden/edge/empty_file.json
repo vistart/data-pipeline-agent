@@ -1,0 +1,17 @@
+{
+  "name": "empty_file",
+  "category": "edge",
+  "input": "解析一个空文件：data/empty.csv",
+  "expected_tool": "parse_data",
+  "expected_args_contain": {
+    "source": "data/empty.csv"
+  },
+  "validation": {
+    "response_must_contain": [
+      "空",
+      "0 行",
+      "无数据"
+    ],
+    "tool_result_status": "error"
+  }
+}

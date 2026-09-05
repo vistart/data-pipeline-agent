@@ -1,0 +1,15 @@
+{
+  "name": "multi_step_quality_repair",
+  "category": "normal",
+  "input": "检查 data/orders_quality_issues.csv 的质量，如果发现 critical 问题就生成告警",
+  "expected_tool_sequence": [
+    "validate_quality",
+    "send_alert"
+  ],
+  "validation": {
+    "must_call_tools": [
+      "validate_quality",
+      "send_alert"
+    ]
+  }
+}

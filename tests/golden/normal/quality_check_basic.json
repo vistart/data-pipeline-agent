@@ -1,0 +1,16 @@
+{
+  "name": "quality_check_basic",
+  "category": "normal",
+  "input": "检查 data/orders_quality_issues.csv 的数据质量",
+  "expected_tool": "validate_quality",
+  "expected_args_contain": {
+    "source": "data/orders_quality_issues.csv"
+  },
+  "validation": {
+    "response_must_contain": [
+      "问题",
+      "严重"
+    ],
+    "tool_result_status": "ok"
+  }
+}

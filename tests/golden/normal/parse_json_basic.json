@@ -1,0 +1,12 @@
+{
+  "name": "parse_json_basic",
+  "category": "normal",
+  "input": "解析这个 JSON 文件：data/config.json",
+  "expected_tool": "parse_data",
+  "expected_args_contain": {
+    "format": "json"
+  },
+  "validation": {
+    "tool_result_status": "ok"
+  }
+}

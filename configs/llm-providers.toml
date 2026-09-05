@@ -1,0 +1,326 @@
+# LLM Provider 目录 — 单一事实源
+# 数据来源：build.nvidia.com / platform.sensenova.cn / docs.b.ai / openrouter.ai
+# 定价为每 1M tokens（USD）；免费填 0，未知省略。数据核对日期 2026-09-05。
+
+# ================= NVIDIA NIM =================
+[nvidia]
+display_name = "NVIDIA NIM"
+api_base = "https://integrate.api.nvidia.com/v1"
+api_key_env = "NVIDIA_API_KEY"
+docs = "https://build.nvidia.com"
+protocol = "openai_compat"
+latency_rating = "slow"   # 实测连接超时/高延迟
+rpm = 60
+max_concurrent = 4
+
+[nvidia.models."deepseek-ai/deepseek-v4-flash-0731"]
+context_window = 1048576
+max_output_tokens = 8192
+input_types = ["text", "image"]
+output_types = ["text"]
+architecture = "304B MoE (13B active)"
+supports_tools = true
+supports_reasoning = false
+valid_from = "2026-08-13"
+
+[nvidia.models."deepseek-ai/deepseek-v4-flash-0731".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+
+[nvidia.models."z-ai/glm-5.2"]
+context_window = 1048576
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "753B MoE"
+supports_tools = true
+supports_reasoning = true
+valid_from = "2026-07-02"
+valid_until = "2026-08-21"   # 接口返回 410 Gone，已下线
+
+[nvidia.models."stepfun-ai/step-3.7-flash"]
+context_window = 262144
+max_output_tokens = 8192
+input_types = ["text", "image"]
+output_types = ["text"]
+architecture = "198B MoE (~11B active)"
+supports_tools = true
+supports_reasoning = true
+valid_from = "2026-05-28"
+
+[nvidia.models."stepfun-ai/step-3.7-flash".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+
+[nvidia.models."thinkingmachines/inkling"]
+context_window = 128000
+max_output_tokens = 8192
+input_types = ["text", "image", "audio"]
+output_types = ["text"]
+architecture = "975B MoE (41B active), Mamba-hybrid"
+supports_tools = false        # Function Calling: Not supported（官方页面）
+supports_reasoning = true
+valid_from = "2026-07-15"
+
+[nvidia.models."thinkingmachines/inkling".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+
+# ================= B.AI =================
+[bai]
+display_name = "B.AI"
+api_base = "https://api.b.ai/v1"
+api_key_env = "BAI_API_KEY"
+docs = "https://docs.b.ai/llmservice/introduction/"
+protocol = "openai_compat"
+latency_rating = "medium"  # 实测 ~2-5s/请求
+rpm = 30
+max_concurrent = 3
+
+[bai.models."glm-5.3-flash"]
+context_window = 1048576
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "GLM-5.3 Flash (text-only fast variant)"
+supports_tools = true
+supports_reasoning = true
+
+[bai.models."glm-5.3-flash".pricing]
+currency = "USD"
+input = 0.075
+output = 0.25
+cached_input = 0.015
+
+[bai.models."qwen3.8-flash"]
+context_window = 262144
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "125B MoE (6B active) + 51B n-gram embeddings, GDN+QSA hybrid attention"
+supports_tools = true
+supports_reasoning = true
+
+[bai.models."qwen3.8-flash".pricing]
+currency = "USD"
+input = 0.16
+output = 0.47
+cached_input = 0.016
+
+[bai.models."mimo-v2.5"]
+context_window = 1048576
+max_output_tokens = 8192
+input_types = ["text", "image", "video", "audio"]
+output_types = ["text"]
+architecture = "310B MoE (15B active), hybrid SWA+GA attention, omnimodal"
+supports_tools = true
+supports_reasoning = true
+
+[bai.models."mimo-v2.5".pricing]
+currency = "USD"
+input = 0.14
+output = 0.28
+cached_input = 0.0028
+
+[bai.models."hy3"]
+context_window = 262144
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "295B MoE (21B active), GQA, 192 experts top-8"
+supports_tools = true
+supports_reasoning = true
+
+[bai.models."hy3".pricing]
+currency = "USD"
+input = 0.132
+output = 0.528
+cached_input = 0.033
+
+# ================= SENSENOVA =================
+[sensenova]
+display_name = "SENSENOVA"
+api_base = "https://token.sensenova.cn/v1"
+api_key_env = "SENSENOVA_API_KEY"
+docs = "https://platform.sensenova.cn/docs"
+protocol = "openai_compat"
+latency_rating = "fast"    # 实测 ~1-4s/请求
+rpm = 20
+max_concurrent = 2
+
+[sensenova.models."sensenova-6.8-flash-lite"]
+context_window = 128000
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+supports_tools = true
+supports_reasoning = false
+
+[sensenova.models."deepseek-v4-flash"]
+context_window = 1000000
+max_output_tokens = 384000
+input_types = ["text"]
+output_types = ["text"]
+architecture = "284B MoE (13B active)"
+supports_tools = true
+supports_reasoning = true
+
+[sensenova.models."glm-5.2"]
+context_window = 1000000
+max_output_tokens = 128000
+input_types = ["text"]
+output_types = ["text"]
+architecture = "GLM-5.2 text foundation"
+supports_tools = true
+supports_reasoning = true
+
+# ================= OpenRouter =================
+[openrouter]
+display_name = "OpenRouter"
+api_base = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+docs = "https://openrouter.ai/docs"
+protocol = "openai_compat"
+latency_rating = "medium"  # 实测 ~3s，偶发不稳定
+rpm = 60
+max_concurrent = 4
+
+[openrouter.models."stealth/ox-alpha"]
+context_window = 1048576
+max_output_tokens = 131072
+input_types = ["text", "image", "video"]
+output_types = ["text"]
+architecture = "stealth reasoning model"
+supports_tools = true
+supports_reasoning = true
+valid_from = "2026-08-20"
+valid_until = "2026-08-27"   # 免费有效期截止
+
+[openrouter.models."stealth/ox-alpha".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+
+# ================= OpenCode Zen =================
+# 数据来源：https://opencode.ai/zen/v1/models （仅收录名称含 "free" 的模型）
+# spec 工具支持度实测 2026-08-23（tools/probe_spec_tools.py，真实 SQLite + StructuredQueryExecutor）
+[opencode]
+display_name = "OpenCode Zen"
+api_base = "https://opencode.ai/zen/v1"
+api_key_env = "OPENCODE_API_KEY"
+docs = "https://opencode.ai"
+protocol = "openai_compat"
+latency_rating = "medium"  # 实测 ~1.2-6.5s；nemotron-3-ultra 约 17s（2026-08-23）
+rpm = 60
+max_concurrent = 4
+
+[opencode.models."x-preview-f-free"]
+context_window = 128000
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "x-preview (free)"
+supports_tools = true
+supports_reasoning = true
+# 实测 2026-08-23: 可用；spec 工具支持度: 优秀（5 轮收敛，4/5 查询成功，成功 terminate）
+
+[opencode.models."x-preview-f-free".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+
+[opencode.models."mimo-v2.5-free"]
+context_window = 128000
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "Mimo v2.5 (free)"
+supports_tools = true
+supports_reasoning = false
+# 实测 2026-08-23: 429 FreeUsageLimitError（免费配额已超限）
+
+[opencode.models."mimo-v2.5-free".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+
+[opencode.models."hy3-free"]
+context_window = 128000
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "HY3 (free)"
+supports_tools = true
+supports_reasoning = false
+# 实测 2026-08-23: 可用；spec 工具支持度: 良好（2 轮快速收敛，1/1 查询成功，成功 terminate）
+
+[opencode.models."hy3-free".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+
+[opencode.models."nemotron-3-ultra-free"]
+context_window = 128000
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "Nemotron 3 Ultra (free)"
+supports_tools = true
+supports_reasoning = true
+# 实测 2026-08-23: 可用但慢（~17-80s）；spec 工具支持度: 良好（4 轮收敛，2/3 查询成功，成功 terminate）
+
+[opencode.models."nemotron-3-ultra-free".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+
+[opencode.models."nemotron-3.5-lightning-free"]
+context_window = 128000
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "Nemotron 3.5 Lightning (free)"
+supports_tools = true
+supports_reasoning = false
+# 实测 2026-08-23: 可用；spec 工具支持度: 差（8 轮仍不收敛，spec/EXEC 错误 7 次，无法 terminate，from/where 格式错误）
+
+[opencode.models."nemotron-3.5-lightning-free".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+
+[opencode.models."laguna-s-2.1-free"]
+context_window = 128000
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "Laguna S 2.1 (free)"
+supports_tools = true
+supports_reasoning = true
+# 实测 2026-08-23: 可用；spec 工具支持度: 良好（4 轮收敛，2/3 查询成功，成功 terminate）
+
+[opencode.models."laguna-s-2.1-free".pricing]
+currency = "USD"
+input = 0.0
+output = 0.0
+cached_input = 0.0
+[nvidia.models."minimaxai/minimax-m3"]
+context_window = 128000
+max_output_tokens = 8192
+input_types = ["text"]
+output_types = ["text"]
+architecture = "MiniMax M3"
+supports_tools = true
+supports_reasoning = false

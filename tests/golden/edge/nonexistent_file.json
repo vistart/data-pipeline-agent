@@ -1,0 +1,17 @@
+{
+  "name": "nonexistent_file",
+  "category": "edge",
+  "input": "解析 data/nonexistent.csv",
+  "expected_tool": "parse_data",
+  "expected_args_contain": {
+    "source": "data/nonexistent.csv"
+  },
+  "validation": {
+    "response_must_contain": [
+      "不存在",
+      "找不到",
+      "not found"
+    ],
+    "tool_result_status": "error"
+  }
+}

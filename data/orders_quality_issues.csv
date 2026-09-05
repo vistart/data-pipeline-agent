@@ -1,0 +1,11 @@
+order_id,customer_name,product,quantity,price,order_date,status
+3001,Alice,Widget A,5,29.99,2026-09-11,completed
+3002,,Widget B,3,49.99,2026-09-11,completed
+3003,Charlie,Widget A,-5,29.99,2026-09-12,pending
+3004,Diana,Widget C,2,not_a_number,2026-09-12,completed
+3005,Eve,Widget B,7,49.99,2026-09-13,completed
+3006,Frank,Widget A,4,29.99,2026-09-13,unknown_status
+3007,Grace,Widget D,1,149.99,,completed
+3008,Henry,Widget A,6,29.99,2026-09-14,completed
+3009,Ivy,Widget C,3,99.99,2026-09-14,completed
+3010,Jack,Widget B,8,49.99,2026-09-15,completed

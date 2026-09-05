@@ -1,0 +1,13 @@
+{
+  "name": "unknown_format",
+  "category": "edge",
+  "input": "解析 data/data.xyz 文件",
+  "expected_tool": "parse_data",
+  "validation": {
+    "response_must_contain": [
+      "不支持",
+      "格式",
+      "unsupported"
+    ]
+  }
+}
