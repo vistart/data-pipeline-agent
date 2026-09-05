@@ -95,7 +95,107 @@ flowchart TD
 | 幂等重试 | `event_key` 去重 |
 | 并发安全 | `OptimisticLockMixin` 乐观锁 |
 
-## 3. 工具设计
+### 2.4 实现方案：动态线性编排
+
+> **Design Decision:** 我们选择动态线性编排而非 DAG，原因：
+> 1. 数据管道工具天然有顺序依赖（parse → validate → transform），并行收益有限
+> 2. LLM 输出是线性的，推断依赖关系成本高、准确率低
+> 3. 线性流程已覆盖 90% 的实际场景
+
+#### 2.4.1 当前实现：线性循环
+
+```python
+# core/__init__.py — 实际代码
+class PipelineAgent:
+    def run(self, user_input: str, session: Session) -> str:
+        messages = [system_prompt, *history, user_input]
+        response = self._call_llm(messages)
+
+        # Dynamic linear: LLM returns tools, we execute in order
+        while "```tool" in response:
+            tool_name, tool_args, response = self._extract_tool_call(response)
+            result = self._execute_tool(tool_name, tool_args, session)
+            # Feed result back to LLM for next step
+            response = self._call_llm(messages + [assistant, tool_result])
+
+        return response
+```
+
+**特点：**
+- LLM 决定工具链（动态），代码按顺序执行（线性）
+- 每步执行后将结果反馈给 LLM，由 LLM 决定下一步
+- 无需预定义工具依赖，完全由 LLM 推理
+
+#### 2.4.2 改进方案：stateflow 线性编排（可选，1 天）
+
+```python
+# 设计方案：用 stateflow 结构化线性流程
+from rhosocial.stateflow import StateMachine, SyncSubProcessHandler, HandlerResult
+
+class PipelineStepHandler(SyncSubProcessHandler):
+    """Wraps a Tool call as a stateflow subprocess."""
+
+    def __init__(self, tool_name: str, tool_args: dict):
+        self.tool_name = tool_name
+        self.tool_args = tool_args
+
+    def start(self) -> HandlerResult:
+        tool = get_tool(self.tool_name)
+        result = tool.run(**self.tool_args)
+        return HandlerResult(
+            status="completed" if result.get("status") == "ok" else "failed",
+            payload=result,
+        )
+
+    def rollback(self) -> HandlerResult:
+        tool = get_tool(self.tool_name)
+        if hasattr(tool, 'rollback'):
+            tool.rollback(self.tool_args)
+        return HandlerResult(status="rollback_complete")
+
+
+def build_linear_pipeline(tool_calls: list[dict]) -> StateMachine:
+    """Build a linear pipeline from LLM tool calls."""
+    sm = StateMachine("pipeline")
+    for i, call in enumerate(tool_calls):
+        handler = PipelineStepHandler(call["name"], call["args"])
+        sm.append_subprocess(f"step_{i}", handler)
+    return sm
+```
+
+**相比原始循环的改进：**
+
+| 能力 | 原始循环 | stateflow 线性 |
+|------|---------|---------------|
+| 上下文传递 | 手动拼 messages | `Order.context` 自动传递 |
+| 事件记录 | 手动 session.log() | `OrderEvent` 自动记录 |
+| 错误处理 | try/except | 统一 rollback 接口 |
+| 执行追踪 | 无 | 每步有 subprocess 状态 |
+| 幂等重试 | 手动实现 | `event_key` 去重 |
+
+**实现成本：** 1 天（handler 包装 + 测试）
+
+#### 2.4.3 未来方案：动态 DAG（如需并行）
+
+> 仅在工具间存在可并行执行的独立子任务时才需要 DAG。
+
+```mermaid
+flowchart LR
+    subgraph Linear["线性流程（当前）"]
+        A1["parse_data"] --> A2["validate_quality"] --> A3["transform_data"]
+    end
+
+    subgraph DAG["DAG 流程（未来）"]
+        B1["parse_orders"] --> B3["validate"]
+        B2["parse_customers"] --> B3
+        B3 --> B4["join + transform"]
+    end
+```
+
+**何时需要 DAG：**
+- 多数据源并行解析（parse_orders + parse_customers 可并行）
+- 独立验证（validate_quality + schema_infer 可并行）
+- 当前 6 个工具的场景下，几乎不会出现
 
 ### 3.1 工具清单
 
